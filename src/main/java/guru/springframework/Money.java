@@ -1,8 +1,10 @@
 package guru.springframework;
 
+import org.jetbrains.annotations.NotNull;
+
 public   class Money implements Expression {
-    protected int amount;
-    protected  Currency currency;
+    protected final int amount;
+    protected final Currency currency;
 
     @Override
     public String toString() {
@@ -35,7 +37,8 @@ public   class Money implements Expression {
         return currency;
     }
 
-    Money times(int multiplier){
+    @Override
+    public Expression times(int multiplier){
         return  new Money(amount * multiplier,this.currency) ;
     }
 
@@ -45,7 +48,7 @@ public   class Money implements Expression {
     }
 
     @Override
-    public Money reduce(Bank bank,Currency to) {
+    public Money reduce(@NotNull Bank bank, Currency to) {
         return new Money(this.amount/bank.rate(this.currency,to),to);
     }
 }
